@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Proyecto ##-- CUBO --##</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+             
+    <script type="text/javascript">
+        
+
+        var clientId = "client_id_" + Math.floor((Math.random() * 1000000) + 1);
+        client = new Paho.MQTT.Client("driver.cloudmqtt.com",  38886, clientId);
+         
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+
+        var options = {
+            useSSL: true,
+            userName: 'rzhrardb',
+            password: 'b13-9NYCjhWA',
+            onSuccess: onConnect,
+            onFailure: doFail
+        }
+
+        client.connect(options);
+
+        function onConnect(){
+            console.log("Conexión exitosa!");
+            client.subscribe("salida");
+        }
+
+        function onMessageArrived(message){
+            console.log("Un mensaje ha llegado: " + message.payloadString);
+        }
+
+        function doFail(e){
+            console.log(e);
+        }
+
+        function onConnectionLost(responseObject){
+            if(responseObject.errorCode !== 0){
+                console.log("onConnectionLost: " + responseObject.errorMessage);
+            }
+        }
+
+        function command(value) {
+            console.log(value);
+            message = new Paho.MQTT.Message(value + "");
+            message.destinationName = "entrada";
+            client.send(message);
+
+            
+            const display = document.querySelector('h4')
+            
+            switch (value) 
+            {
+                  case 1:
+                    display.textContent = 'Patron # 1'
+                    
+                    break;
+                  case 2:
+                    display.textContent = 'Patron # 2'
+                    break;
+                  case 3:
+                    display.textContent = 'Patron # 3'
+                    break;
+                  case 4:
+                    display.textContent = 'Patron # 4'
+                    break;
+                  case 5:
+                    display.textContent = 'Patron # 5'
+                    break;
+                  case 6:
+                    display.textContent = 'Patron # 6'
+                    break;
+                  case 7:
+                    display.textContent = 'Patron # 7'
+                    break;
+                    case 8:
+                    display.textContent = 'Patron # 8'
+                    break;
+                  default:
+                  display.textContent = 'Elija una Animacion'
+
+
+                  
+            }
+        }
+
+       
+    </script>
+      <div class="jumbotron text-center">
+        <h1>CUBO Iot</h1>
+        <p>Esto es el Internet en las cosas!!</p>
+      </div>
+      <div class="container center">
+
+        <h4>Elija un patron</h4>
+
+      </div>
+      <div class="container center">
+        <div class="row ">
+
+          <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img1.gif">
+                  <h4><strong>Patron # 1</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(1), M.toast({html: 'Patron # 1'})"
+                   data-toggle="modal" data-target="#myModal1" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img2.gif">
+                  <h4><strong>Patron # 2</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(2), M.toast({html: 'Patron # 2'})"
+                   data-toggle="modal" data-target="#myModal2" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img3.gif">
+                  <h4><strong>Patron # 3</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(3), M.toast({html: 'Patron # 3'})"
+                   data-toggle="modal" data-target="#myModal3" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img4.gif">
+                  <h4><strong>Patron # 4</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(4), M.toast({html: 'Patron # 4'})"
+                   data-toggle="modal" data-target="#myModal4" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img5.gif">
+                  <h4><strong>Patron # 5</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(5), M.toast({html: 'Patron # 5'})"
+                   data-toggle="modal" data-target="#myModal5" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img6.gif">
+                  <h4><strong>Patron # 6</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(6), M.toast({html: 'Patron # 6'})"
+                   data-toggle="modal" data-target="#myModal6" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img7.gif">
+                  <h4><strong>Patron # 7</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(7), M.toast({html: 'Patron # 7'})"
+                   data-toggle="modal" data-target="#myModal7" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>
+              </div>
+                     
+              <div class="col-sm-4">
+                <div class="thumbnail">
+                  <img src="img8.gif">
+                  <h4><strong>Patron # 8</strong></h4>
+                  <button type="button" class="btn btn-info btn-lg" onclick="command(8), M.toast({html: 'Patron # 8'})"
+                   data-toggle="modal" data-target="#myModal8" type="submit" name="action">Iniciar</button>
+                    <button onclick="command(0)" class="btn red waves-effect waves-light" type="submit" name="action">Parar </button>
+                  </button>
+                </div>          
+              </div>
+
+
+      </div>
+
+
+       <!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 1</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img1.gif" alt="img1" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(1), M.toast({html: 'Patron # 1'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 2-->
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 2</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img2.gif" alt="img2" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(2), M.toast({html: 'Patron # 2'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal3 -->
+  <div class="modal fade" id="myModal3" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 3</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img3.gif" alt="img1" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(3), M.toast({html: 'Patron # 3'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 4 -->
+  <div class="modal fade" id="myModal4" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 4</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img4.gif" alt="img4" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(4), M.toast({html: 'Patron # 4'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 5 -->
+  <div class="modal fade" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 5</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img5.gif" alt="img5" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(5), M.toast({html: 'Patron # 5'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 6 -->
+  <div class="modal fade" id="myModal6" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 6</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img6.gif" alt="img6" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(6), M.toast({html: 'Patron # 6'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 7 -->
+  <div class="modal fade" id="myModal7" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 7</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img7.gif" alt="img7" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(7), M.toast({html: 'Patron # 7'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+  <!-- Modal 8 -->
+  <div class="modal fade" id="myModal8" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Animacion patron 8</p>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="img8.gif" alt="img8" width="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" onclick="command(8), M.toast({html: 'Patron # 8'})" type="submit" name="action">Reiniciar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+
+
+   <style>
+.jumbotron {
+  background-color: #159b89; 
+  color: #ffffff;
+}
+body {
+  background-color: #85a8a3; 
+}
+
+.thumbnail h4 {
+  color: #555;
+}
+
+/* Black buttons with extra padding and without rounded borders */
+.btn {
+  background-color: #333;
+  color: #f1f1f1;
+  transition: .2s;
+}
+
+/* On hover, the color of .btn will transition to white with black text */
+.btn:hover, .btn:focus {
+  border: 1px solid #333;
+  background-color: #fff;
+  color: #000;
+}
+
+   </style>
+</body>
+
+</html>
+
